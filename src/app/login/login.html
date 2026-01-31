@@ -1,0 +1,52 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <h2>Welcome Back 👋</h2>
+    <p class="subtitle">Login using OTP</p>
+
+    <!-- Username -->
+    <div class="input-group">
+      <input type="text" [(ngModel)]="username" required />
+      <label>Username</label>
+    </div>
+
+    <!-- Send OTP Button -->
+    <button *ngIf="!otpSent" (click)="sendOtp()" [disabled]="loading || !username">
+      <span *ngIf="!loading">Send OTP</span>
+      <span *ngIf="loading" class="spinner"></span>
+    </button>
+
+    <!-- OTP Section -->
+    <div *ngIf="otpSent">
+      <div class="input-group">
+        <input
+          type="text"
+          maxlength="4"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          [(ngModel)]="otp"
+          required
+        />
+        <label>Enter 4-digit OTP</label>
+      </div>
+
+      <button (click)="verifyOtp()" [disabled]="loading || otp.length != 4">
+        <span *ngIf="!loading">Submit OTP</span>
+        <span *ngIf="loading" class="spinner"></span>
+      </button>
+    </div>
+
+    <!-- Error Message -->
+    <p *ngIf="errorMsg" class="error">{{ errorMsg }}</p>
+
+    <!-- Register -->
+    <div *ngIf="!otpSent" class="register-link">
+      <span>Don’t have an account?</span>
+      <a routerLink="/register">Register</a>
+    </div>
+  </div>
+</div>
+
+<!-- Debug -->
+<p>Debug: otpSent = {{ otpSent }}</p>
+
+
