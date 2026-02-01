@@ -1,0 +1,40 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <h2>Create Account ✨</h2>
+    <p class="subtitle">Register to get started</p>
+
+    <div class="input-group">
+      <input type="text" [(ngModel)]="username" required />
+      <label>Username</label>
+    </div>
+
+    <div class="input-group">
+      <input type="email" [(ngModel)]="email" required />
+      <label>Email</label>
+    </div>
+
+    <div class="input-group">
+      <input type="text" [(ngModel)]="mobile" required />
+      <label>Mobile</label>
+    </div>
+
+    <div class="input-group">
+      <input type="password" [(ngModel)]="password" required />
+      <label>Password</label>
+    </div>
+
+    <button (click)="register()" [disabled]="loading">
+      <span *ngIf="!loading">Register</span>
+      <span *ngIf="loading" class="spinner"></span>
+    </button>
+
+    <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+    <p class="success" *ngIf="successMsg">{{ successMsg }}</p>
+
+
+    <div class="register-link">
+      <span>Already have an account?</span>
+      <a routerLink="/">Login</a>
+    </div>
+  </div>
+</div>

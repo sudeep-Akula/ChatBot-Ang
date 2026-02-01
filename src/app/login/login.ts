@@ -50,8 +50,6 @@ export class Login {
             console.log('OTP sent successfully');
             console.log('Backend response:', res);
             console.log('otpSent flag:', this.otpSent);
-            
-
           } else {
             this.errorMsg = res.message || 'Failed to send OTP';
           }
