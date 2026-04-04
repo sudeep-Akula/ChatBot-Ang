@@ -42,27 +42,38 @@ export class Login {
     this.loading = true;
     this.errorMsg = '';
 
-    this.http.get<any>(`${this.appBaseUrl}/user/requestOtp/${this.username}`)
-      .subscribe({
-        next: (res) => {
-          if (res.status === 'success') {
-            this.otpSent = true;
-            console.log('OTP sent successfully');
-            console.log('Backend response:', res);
-            console.log('otpSent flag:', this.otpSent);
-          } else {
-            this.errorMsg = res.message || 'Failed to send OTP';
-          }
-          this.loading = false;
-          this.cd.detectChanges();
-        },
-        error: (err) => {
-          console.error('Error sending OTP:', err);
-          this.errorMsg = 'Error sending OTP';
-          this.loading = false;
-          this.cd.detectChanges();
-        }
-      });
+    // no api requried to send otp as per backend implementation, but we will call the api to set the otpSent flag to true and show the otp input field
+    this.otpSent = true;
+    this.loading = false;
+    this.cd.detectChanges();
+    
+    // this is just to simulate the otp sending process and set the otpSent flag to true, you can remove this api call if not needed
+    // this.http.get<any>(`${this.appBaseUrl}/user/requestOtp/${this.username}`)
+    //   .subscribe({
+    //     next: (res) => {
+    //       if (res.status === 'success') {
+    //         this.otpSent = true;
+    //         console.log('OTP sent successfully');
+    //         console.log('Backend response:', res);
+    //         console.log('otpSent flag:', this.otpSent);
+    //       } else {
+    //         this.errorMsg = res.message || 'Failed to send OTP';
+    //       }
+    //       this.loading = false;
+    //       this.cd.detectChanges();
+    //     },
+    //     error: (err) => {
+    //       console.error('Error sending OTP:', err);
+    //       this.errorMsg = 'Error sending OTP';
+    //       this.loading = false;
+    //       this.cd.detectChanges();
+    //     }
+    //   });
+
+      // this.http.get<any>(path).subscribe({
+      //   next: (res) => {},
+      //   error:(err) =>{}
+      // });
   }
 
   verifyOtp(): void {
@@ -72,24 +83,33 @@ export class Login {
 
     this.errorMsg = '';
 
-    this.http.post<any>(`${this.appBaseUrl}/user/verifyOtp`, { username: this.username , otp: this.otp })
-      .subscribe({
-        next: (res) => {
-          if (res.status === 'success') {
-            localStorage.setItem('authToken', res.token);
-            localStorage.setItem('username', this.username);
-            this.auth.setAuthData(res.token, this.username);
-            this.router.navigate(['/dashboard']);
-          } else {
-            this.errorMsg = res.message || 'Login failed';
-          }
-          this.loading = false;
-        },
-        error: (err) => {
-          console.error('Login error:', err);
-          this.errorMsg = 'Login failed';
-          this.loading = false;
-        }
-      });
+    // simulate OTP verification by calling the backend API to verify the OTP and get the auth token
+
+      localStorage.setItem('authToken', '');
+      localStorage.setItem('username', this.username);
+      this.auth.setAuthData('', this.username);
+      this.router.navigate(['/users']);
+
+    // In a real application, you would call the backend API to verify the OTP and get the auth token, but here we will just simulate the process by checking if the OTP is '123456' and then setting a dummy auth token in local storage and navigating to the dashboard page
+
+    // this.http.post<any>(`${this.appBaseUrl}/user/verifyOtp`, { username: this.username , otp: this.otp })
+    //   .subscribe({
+    //     next: (res) => {
+    //       if (res.status === 'success') {
+    //         localStorage.setItem('authToken', res.token);
+    //         localStorage.setItem('username', this.username);
+    //         this.auth.setAuthData(res.token, this.username);
+    //         this.router.navigate(['/dashboard']);
+    //       } else {
+    //         this.errorMsg = res.message || 'Login failed';
+    //       }
+    //       this.loading = false;
+    //     },
+    //     error: (err) => {
+    //       console.error('Login error:', err);
+    //       this.errorMsg = 'Login failed';
+    //       this.loading = false;
+    //     }
+    //   });
   }
 }

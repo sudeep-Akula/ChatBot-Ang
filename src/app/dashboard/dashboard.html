@@ -1,1 +1,27 @@
-<p>dashboard works!</p>
+<div class="video-container">
+
+  <video
+    #videoPlayer
+    width="900"
+    controls
+    preload="metadata"
+    [src]="videoUrl"
+    (loadedmetadata)="onLoadedMetadata(videoPlayer)"
+    (timeupdate)="onTimeUpdate(videoPlayer)">
+  </video>
+
+  <!-- YouTube style duration -->
+  <div class="time-display">
+    {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
+  </div>
+
+  <!-- Play from specific time -->
+  <button (click)="playFromTime(videoPlayer, 60)">
+    ▶ Play from 1:00
+  </button>
+
+  <button (click)="playFromTime(videoPlayer, 120)">
+    ▶ Play from 2:00
+  </button>
+
+</div>
